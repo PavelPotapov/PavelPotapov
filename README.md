@@ -9,9 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://t.me/eptines"><img src="https://img.shields.io/badge/Telegram-00FFFF?style=for-the-badge&logo=telegram&logoColor=0D1117" alt="Telegram" /></a>
-  <a href="mailto:eptinessprevails@yandex.com"><img src="https://img.shields.io/badge/Email-FF00FF?style=for-the-badge&logo=maildotru&logoColor=0D1117" alt="Email" /></a>
-  <img src="https://komarev.com/ghpvc/?username=PavelPotapov&style=for-the-badge&color=7B00FF&label=PROFILE+VIEWS" alt="Profile Views" />
+  <a href="https://t.me/Pavel_Potapov"><img src="https://img.shields.io/badge/Telegram-00FFFF?style=for-the-badge&logo=telegram&logoColor=0D1117" alt="Telegram" /></a>
+  <a href="mailto:potapv.p.s@yandex.ru"><img src="https://img.shields.io/badge/Email-FF00FF?style=for-the-badge&logo=maildotru&logoColor=0D1117" alt="Email" /></a>
 </p>
 
 ---
@@ -102,16 +101,7 @@ Dual wallet adapter (13 wallets + AppKit). Bidirectional ExactIn/ExactOut quotin
 ## `> stats`
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=PavelPotapov&show_icons=true&bg_color=0D1117&title_color=00FFFF&text_color=A0A0FF&icon_color=FF00FF&border_color=7B00FF&hide_border=false&rank_icon=github&include_all_commits=true" height="180" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=PavelPotapov&layout=compact&bg_color=0D1117&title_color=00FFFF&text_color=A0A0FF&border_color=7B00FF&hide_border=false&langs_count=8" height="180" alt="Top Languages" />
-</p>
-
-<p align="center">
   <img src="https://streak-stats.demolab.com/?user=PavelPotapov&theme=transparent&background=0D1117&border=7B00FF&stroke=FF00FF&ring=00FFFF&fire=FF00FF&currStreakNum=00FFFF&sideNums=FF00FF&currStreakLabel=FF00FF&sideLabels=00FFFF&dates=A0A0FF" alt="GitHub Streak" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=PavelPotapov&bg_color=0D1117&color=00FFFF&line=FF00FF&point=FF4081&area=true&area_color=7B00FF&hide_border=true" width="100%" alt="Activity Graph" />
 </p>
 
 ---
