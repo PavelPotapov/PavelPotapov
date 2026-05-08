@@ -17,14 +17,14 @@
 
 ## `> whoami`
 
-Senior Frontend Engineer with **5+ years** of commercial experience, specializing in complex interactive systems that most developers never touch:
+Senior Frontend Engineer. I build things that most developers avoid — visual editors, real-time collaborative systems, enterprise-grade data grids, and DeFi interfaces.
 
-- **Visual Editors** — built a presentation editor **twice**: first on Canvas (Fabric.js), then migrated to a DOM-based architecture. I can argue every tradeoff between the two.
-- **Enterprise at Scale** — my component library at one of Russia's largest banks is used by **thousands of developers** across dozens of internal products. Canvas-powered data grid with **22+ composable feature modules**.
-- **Real-Time Collaboration** — SSE with hexagonal architecture (5 ports, adaptive reconnect, transport switching), WebSocket collaborative editing with Redis pessimistic cell locking.
-- **Web3 / DeFi** — Solana DEX with dual wallet adapter (13 wallets), VersionedTransaction lifecycle, Solidity smart contracts (ERC-1155, NFT minting).
+- **Visual Editors** — built a presentation editor twice: first on Canvas, then migrated to DOM. I know the tradeoffs between the two.
+- **Enterprise at Scale** — my component library at a major bank is used across dozens of internal products.
+- **Real-Time** — collaborative editing, SSE pipelines, WebSocket-based multi-user systems.
+- **Web3** — Solana DEX, wallet integrations, smart contracts on Solidity.
 
-Currently building an **AI-powered presentation platform** and a **headless table widget** with 13 composable features, 62 unit + 24 E2E tests.
+Currently building an AI-powered presentation platform and shipping headless table widgets.
 
 ---
 
@@ -70,13 +70,13 @@ Currently building an **AI-powered presentation platform** and a **headless tabl
 <td width="50%">
 
 ### AI Presentation Editor
-DOM-based visual editor (React 19, TipTap v3, Moveable). 4-tier Zustand store architecture optimized for 60fps drag operations. SSE system with hexagonal architecture, 5 ports, adaptive reconnect. Previously built on Fabric.js Canvas — migrated to DOM with documented ADRs.
+Visual slide editor built from scratch — first on Canvas (Fabric.js), then re-architected as DOM-based. Rich text, image masking, real-time SSE pipeline to AI backend. Performance-critical state management for smooth drag/resize interactions.
 
 </td>
 <td width="50%">
 
 ### Enterprise Component Library
-100+ production components for a major Russian bank. Canvas table (`glide-data-grid`) with 22+ feature modules. Drag-and-drop dashboard grid with smart compaction. NX 19 + Lerna 8 monorepo, Storybook 8.1, MSW, screenshot regression testing.
+Production UI kit for a major Russian bank — canvas-powered data grid, drag-and-drop dashboards, analytical widgets, form system. Monorepo with Storybook, visual regression testing, design system integration.
 
 </td>
 </tr>
@@ -84,13 +84,13 @@ DOM-based visual editor (React 19, TipTap v3, Moveable). 4-tier Zustand store ar
 <td width="50%">
 
 ### Headless Table Widget
-13 composable features built on TanStack Table v8: sorting, filtering, pagination, tree management, cell editing, virtualization, column pinning/reordering, and more. Headless core with zero React imports. 62 unit + 24 E2E tests.
+Composable table system on top of TanStack Table — sorting, filtering, tree management, cell editing, virtualization, collaborative locking. Headless core, fully typed, tested with unit and E2E suites.
 
 </td>
 <td width="50%">
 
-### Solana DEX (swap.io)
-Dual wallet adapter (13 wallets + AppKit). Bidirectional ExactIn/ExactOut quoting with abort controllers. Locale-aware numeric input with manual caret management and `decimal.js` precision. VersionedTransaction signing and lifecycle polling.
+### Solana DEX
+Crypto exchange frontend with wallet integrations, on-chain transaction signing, locale-aware numeric input with precision math. Bidirectional quoting, swap route visualization, multi-language support.
 
 </td>
 </tr>
