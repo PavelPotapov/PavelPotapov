@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF00FF,50:7B00FF,100:00FFFF&height=220&section=header&text=15fps&fontSize=72&fontColor=FFFFFF&animation=twinkling&fontAlignY=35&desc=Senior%20Frontend%20Engineer&descAlignY=55&descSize=22&descColor=A0A0FF" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF00FF,50:7B00FF,100:00FFFF&height=220&section=header&text=15fps&fontSize=72&fontColor=FFFFFF&animation=twinkling&fontAlignY=35&desc=Frontend%20Engineer&descAlignY=55&descSize=22&descColor=A0A0FF" width="100%" />
 </p>
 
 <p align="center">
@@ -17,7 +17,7 @@
 
 ## `> whoami`
 
-Senior Frontend Engineer. I build things that most developers avoid — visual editors, real-time collaborative systems, enterprise-grade data grids, and DeFi interfaces.
+Frontend Engineer. I build things that most developers avoid — visual editors, real-time collaborative systems, enterprise-grade data grids, and DeFi interfaces.
 
 - **Visual Editors** — built a presentation editor twice: first on Canvas, then migrated to DOM. I know the tradeoffs between the two.
 - **Enterprise at Scale** — my component library at a major bank is used across dozens of internal products.
