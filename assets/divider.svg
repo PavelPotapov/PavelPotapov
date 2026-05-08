@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="20" viewBox="0 0 900 20">
+  <defs>
+    <linearGradient id="neonLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF00FF" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#FF00FF" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#00FFFF" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#FF00FF" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#FF00FF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="dGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <style>
+    @keyframes dashMove {
+      0% { stroke-dashoffset: 40; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes gPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .dash-line { animation: dashMove 2s linear infinite; }
+    .glow-line { animation: gPulse 3s ease-in-out infinite; }
+  </style>
+
+  <line x1="100" y1="10" x2="800" y2="10" stroke="url(#neonLine)" stroke-width="1" filter="url(#dGlow)" class="glow-line"/>
+  <line x1="200" y1="10" x2="700" y2="10" stroke="#00FFFF" stroke-width="0.5" stroke-dasharray="8 12" class="dash-line" opacity="0.6"/>
+
+  <!-- Center diamond -->
+  <polygon points="450,4 456,10 450,16 444,10" fill="#00FFFF" opacity="0.8" filter="url(#dGlow)"/>
+</svg>

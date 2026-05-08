@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF00FF,50:7B00FF,100:00FFFF&height=220&section=header&text=15fps&fontSize=72&fontColor=FFFFFF&animation=twinkling&fontAlignY=35&desc=Frontend%20Engineer&descAlignY=55&descSize=22&descColor=A0A0FF" width="100%" />
+  <img src="./assets/hero.svg" width="100%" alt="15fps — Frontend Engineer" />
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
   <a href="mailto:potapv.p.s@yandex.ru"><img src="https://img.shields.io/badge/Email-FF00FF?style=for-the-badge&logo=maildotru&logoColor=0D1117" alt="Email" /></a>
 </p>
 
----
+<p align="center"><img src="./assets/divider.svg" width="100%" /></p>
 
 ## `> whoami`
 
@@ -26,7 +26,7 @@ Frontend Engineer. I build things that most developers avoid — visual editors,
 
 Currently building an AI-powered presentation platform and shipping headless table widgets.
 
----
+<p align="center"><img src="./assets/divider.svg" width="100%" /></p>
 
 ## `> tech_stack`
 
@@ -61,11 +61,7 @@ Currently building an AI-powered presentation platform and shipping headless tab
 
 </details>
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:1a0030,100:0D1117&height=2&section=header" width="100%" />
-</p>
-
----
+<p align="center"><img src="./assets/divider.svg" width="100%" /></p>
 
 ## `> featured_work`
 
@@ -99,8 +95,6 @@ Crypto exchange frontend with wallet integrations, on-chain transaction signing,
 </td>
 </tr>
 </table>
-
----
 
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00FFFF,50:7B00FF,100:FF00FF&height=120&section=footer" width="100%" />
