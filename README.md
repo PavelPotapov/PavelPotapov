@@ -103,5 +103,5 @@ Crypto exchange frontend with wallet integrations, on-chain transaction signing,
 ---
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=shark&color=0:FF00FF,50:7B00FF,100:00FFFF&height=140&section=footer&fontSize=0&animation=twinkling" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00FFFF,50:7B00FF,100:FF00FF&height=120&section=footer" width="100%" />
 </p>
