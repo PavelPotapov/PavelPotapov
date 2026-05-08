@@ -61,6 +61,10 @@ Currently building an AI-powered presentation platform and shipping headless tab
 
 </details>
 
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:1a0030,100:0D1117&height=2&section=header" width="100%" />
+</p>
+
 ---
 
 ## `> featured_work`
@@ -69,13 +73,13 @@ Currently building an AI-powered presentation platform and shipping headless tab
 <tr>
 <td width="50%">
 
-### AI Presentation Editor
+### <img src="https://img.shields.io/badge/▸-00FFFF?style=flat-square&logoColor=white" /> AI Presentation Editor
 Visual slide editor built from scratch — first on Canvas (Fabric.js), then re-architected as DOM-based. Rich text, image masking, real-time SSE pipeline to AI backend. Performance-critical state management for smooth drag/resize interactions.
 
 </td>
 <td width="50%">
 
-### Enterprise Component Library
+### <img src="https://img.shields.io/badge/▸-FF00FF?style=flat-square&logoColor=white" /> Enterprise Component Library
 Production UI kit for a major Russian bank — canvas-powered data grid, drag-and-drop dashboards, analytical widgets, form system. Monorepo with Storybook, visual regression testing, design system integration.
 
 </td>
@@ -83,13 +87,13 @@ Production UI kit for a major Russian bank — canvas-powered data grid, drag-an
 <tr>
 <td width="50%">
 
-### Headless Table Widget
+### <img src="https://img.shields.io/badge/▸-7B00FF?style=flat-square&logoColor=white" /> Headless Table Widget
 Composable table system on top of TanStack Table — sorting, filtering, tree management, cell editing, virtualization, collaborative locking. Headless core, fully typed, tested with unit and E2E suites.
 
 </td>
 <td width="50%">
 
-### Solana DEX
+### <img src="https://img.shields.io/badge/▸-FF4081?style=flat-square&logoColor=white" /> Solana DEX
 Crypto exchange frontend with wallet integrations, on-chain transaction signing, locale-aware numeric input with precision math. Bidirectional quoting, swap route visualization, multi-language support.
 
 </td>
@@ -98,14 +102,6 @@ Crypto exchange frontend with wallet integrations, on-chain transaction signing,
 
 ---
 
-## `> stats`
-
 <p align="center">
-  <img src="https://streak-stats.demolab.com/?user=PavelPotapov&theme=transparent&background=0D1117&border=7B00FF&stroke=FF00FF&ring=00FFFF&fire=FF00FF&currStreakNum=00FFFF&sideNums=FF00FF&currStreakLabel=FF00FF&sideLabels=00FFFF&dates=A0A0FF" alt="GitHub Streak" />
-</p>
-
----
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00FFFF,50:7B00FF,100:FF00FF&height=120&section=footer" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=shark&color=0:FF00FF,50:7B00FF,100:00FFFF&height=140&section=footer&fontSize=0&animation=twinkling" width="100%" />
 </p>
