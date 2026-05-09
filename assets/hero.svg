@@ -1,145 +1,127 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="400" viewBox="0 0 900 400">
   <defs>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="glowStrong">
-      <feGaussianBlur stdDeviation="5" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="bugGlow">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00FFFF"/>
-      <stop offset="50%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#FF00FF"/>
-    </linearGradient>
-    <linearGradient id="groundGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FF00FF" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#00FFFF" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#FF00FF" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="gridGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#7B00FF" stop-opacity="0"/>
-      <stop offset="60%" stop-color="#7B00FF" stop-opacity="0.06"/>
-      <stop offset="100%" stop-color="#FF00FF" stop-opacity="0.15"/>
-    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowS"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bugG"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="tG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00FFFF"/><stop offset="50%" stop-color="#FFF"/><stop offset="100%" stop-color="#FF00FF"/></linearGradient>
+    <linearGradient id="gG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FF00FF" stop-opacity="0"/><stop offset="50%" stop-color="#00FFFF" stop-opacity="1"/><stop offset="100%" stop-color="#FF00FF" stop-opacity="0"/></linearGradient>
+    <linearGradient id="grG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#7B00FF" stop-opacity="0"/><stop offset="60%" stop-color="#7B00FF" stop-opacity="0.06"/><stop offset="100%" stop-color="#FF00FF" stop-opacity="0.15"/></linearGradient>
   </defs>
 
   <style>
-    /* ===== CHARACTER ACTIONS ===== */
-    /* 12s cycle: run, jump(ground bug), run, duck(flying bug), run, jump(gap), run, duck(flying bug) */
-    @keyframes charAction {
-      0%, 10%    { transform: translateY(0) scaleY(1); }      /* run */
-      12%        { transform: translateY(-40px) scaleY(1); }   /* jump up */
-      15%        { transform: translateY(-40px) scaleY(1); }   /* hang */
-      18%        { transform: translateY(0) scaleY(1); }       /* land */
-      20%, 33%   { transform: translateY(0) scaleY(1); }       /* run */
-      36%        { transform: translateY(12px) scaleY(0.6); }  /* duck */
-      40%        { transform: translateY(12px) scaleY(0.6); }  /* stay ducked */
-      43%        { transform: translateY(0) scaleY(1); }       /* stand up */
-      45%, 58%   { transform: translateY(0) scaleY(1); }       /* run */
-      60%        { transform: translateY(-40px) scaleY(1); }   /* jump */
-      63%        { transform: translateY(-40px) scaleY(1); }   /* hang */
-      66%        { transform: translateY(0) scaleY(1); }       /* land */
-      68%, 82%   { transform: translateY(0) scaleY(1); }       /* run */
-      85%        { transform: translateY(12px) scaleY(0.6); }  /* duck */
-      89%        { transform: translateY(12px) scaleY(0.6); }  /* stay ducked */
-      92%        { transform: translateY(0) scaleY(1); }       /* stand up */
-      94%, 100%  { transform: translateY(0) scaleY(1); }       /* run */
+    /* === 24s MASTER CYCLE === */
+    /* Pattern: Jump(2s) Duck(6s) Jump(9.5s) Duck(14s) Duck(17.5s) Jump(22s) */
+    /* As %: 8.3% 25% 39.6% 58.3% 72.9% 91.7% */
+
+    /* charJump: vertical movement — resynced for x=450 center position */
+    @keyframes charJump {
+      0%, 1.5%   { transform: translateY(0); }
+      3%, 6%     { transform: translateY(-44px); }
+      7.5%, 33%  { transform: translateY(0); }
+      34.5%, 37% { transform: translateY(-44px); }
+      38.5%, 85% { transform: translateY(0); }
+      86.5%, 89% { transform: translateY(-44px); }
+      90.5%, 100%{ transform: translateY(0); }
     }
 
-    /* ===== OBSTACLES scroll right to left ===== */
-    /* Ground bug 1 — arrives at char position (~15% of cycle) */
-    @keyframes obst1 {
-      0%   { transform: translateX(750px); }
-      100% { transform: translateX(-100px); }
+    /* Sprite visibility вЂ” roll windows: 22-30.5%, 55-63.5%, 70-78.5% (17 frames, 0.5% each) */
+    @keyframes showRun {
+      0%,16.9%{opacity:1} 17%,25.4%{opacity:0} 25.5%,50.4%{opacity:1} 50.5%,58.9%{opacity:0} 59%,64.9%{opacity:1} 65%,73.4%{opacity:0} 73.5%,100%{opacity:1}
     }
-    /* Flying bug — arrives at char position (~38% of cycle) */
-    @keyframes obst2 {
-      0%   { transform: translateX(750px); }
-      100% { transform: translateX(-100px); }
-    }
-    /* Ground gap — arrives at char position (~62% of cycle) */
-    @keyframes obst3 {
-      0%   { transform: translateX(750px); }
-      100% { transform: translateX(-100px); }
-    }
-    /* Flying bug 2 — arrives at char position (~87% of cycle) */
-    @keyframes obst4 {
-      0%   { transform: translateX(750px); }
-      100% { transform: translateX(-100px); }
-    }
+    @keyframes showF1 { 0%,16.9%{opacity:0} 17%,17.4%{opacity:1} 17.5%,50.4%{opacity:0} 50.5%,50.9%{opacity:1} 51%,64.9%{opacity:0} 65%,65.4%{opacity:1} 65.5%,100%{opacity:0} }
+    @keyframes showF2 { 0%,17.4%{opacity:0} 17.5%,17.9%{opacity:1} 18%,50.9%{opacity:0} 51%,51.4%{opacity:1} 51.5%,65.4%{opacity:0} 65.5%,65.9%{opacity:1} 66%,100%{opacity:0} }
+    @keyframes showF3 { 0%,17.9%{opacity:0} 18%,18.4%{opacity:1} 18.5%,51.4%{opacity:0} 51.5%,51.9%{opacity:1} 52%,65.9%{opacity:0} 66%,66.4%{opacity:1} 66.5%,100%{opacity:0} }
+    @keyframes showF4 { 0%,18.4%{opacity:0} 18.5%,18.9%{opacity:1} 19%,51.9%{opacity:0} 52%,52.4%{opacity:1} 52.5%,66.4%{opacity:0} 66.5%,66.9%{opacity:1} 67%,100%{opacity:0} }
+    @keyframes showF5 { 0%,18.9%{opacity:0} 19%,19.4%{opacity:1} 19.5%,52.4%{opacity:0} 52.5%,52.9%{opacity:1} 53%,66.9%{opacity:0} 67%,67.4%{opacity:1} 67.5%,100%{opacity:0} }
+    @keyframes showF6 { 0%,19.4%{opacity:0} 19.5%,19.9%{opacity:1} 20%,52.9%{opacity:0} 53%,53.4%{opacity:1} 53.5%,67.4%{opacity:0} 67.5%,67.9%{opacity:1} 68%,100%{opacity:0} }
+    @keyframes showF7 { 0%,19.9%{opacity:0} 20%,20.4%{opacity:1} 20.5%,53.4%{opacity:0} 53.5%,53.9%{opacity:1} 54%,67.9%{opacity:0} 68%,68.4%{opacity:1} 68.5%,100%{opacity:0} }
+    @keyframes showF8 { 0%,20.4%{opacity:0} 20.5%,20.9%{opacity:1} 21%,53.9%{opacity:0} 54%,54.4%{opacity:1} 54.5%,68.4%{opacity:0} 68.5%,68.9%{opacity:1} 69%,100%{opacity:0} }
+    @keyframes showF9 { 0%,20.9%{opacity:0} 21%,21.4%{opacity:1} 21.5%,54.4%{opacity:0} 54.5%,54.9%{opacity:1} 55%,68.9%{opacity:0} 69%,69.4%{opacity:1} 69.5%,100%{opacity:0} }
+    @keyframes showF10 { 0%,21.4%{opacity:0} 21.5%,21.9%{opacity:1} 22%,54.9%{opacity:0} 55%,55.4%{opacity:1} 55.5%,69.4%{opacity:0} 69.5%,69.9%{opacity:1} 70%,100%{opacity:0} }
+    @keyframes showF11 { 0%,21.9%{opacity:0} 22%,22.4%{opacity:1} 22.5%,55.4%{opacity:0} 55.5%,55.9%{opacity:1} 56%,69.9%{opacity:0} 70%,70.4%{opacity:1} 70.5%,100%{opacity:0} }
+    @keyframes showF12 { 0%,22.4%{opacity:0} 22.5%,22.9%{opacity:1} 23%,55.9%{opacity:0} 56%,56.4%{opacity:1} 56.5%,70.4%{opacity:0} 70.5%,70.9%{opacity:1} 71%,100%{opacity:0} }
+    @keyframes showF13 { 0%,22.9%{opacity:0} 23%,23.4%{opacity:1} 23.5%,56.4%{opacity:0} 56.5%,56.9%{opacity:1} 57%,70.9%{opacity:0} 71%,71.4%{opacity:1} 71.5%,100%{opacity:0} }
+    @keyframes showF14 { 0%,23.4%{opacity:0} 23.5%,23.9%{opacity:1} 24%,56.9%{opacity:0} 57%,57.4%{opacity:1} 57.5%,71.4%{opacity:0} 71.5%,71.9%{opacity:1} 72%,100%{opacity:0} }
+    @keyframes showF15 { 0%,23.9%{opacity:0} 24%,24.4%{opacity:1} 24.5%,57.4%{opacity:0} 57.5%,57.9%{opacity:1} 58%,71.9%{opacity:0} 72%,72.4%{opacity:1} 72.5%,100%{opacity:0} }
+    @keyframes showF16 { 0%,24.4%{opacity:0} 24.5%,24.9%{opacity:1} 25%,57.9%{opacity:0} 58%,58.4%{opacity:1} 58.5%,72.4%{opacity:0} 72.5%,72.9%{opacity:1} 73%,100%{opacity:0} }
+    @keyframes showF17 { 0%,24.9%{opacity:0} 25%,25.4%{opacity:1} 25.5%,58.4%{opacity:0} 58.5%,58.9%{opacity:1} 59%,72.9%{opacity:0} 73%,73.4%{opacity:1} 73.5%,100%{opacity:0} }
 
-    @keyframes bugWalk {
-      0%, 50% { transform: translateY(0); }
-      25% { transform: translateY(-2px); }
-      75% { transform: translateY(1px); }
-    }
-    @keyframes bugFly {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    @keyframes bugWings {
-      0%, 50% { transform: scaleY(1); }
-      25%, 75% { transform: scaleY(0.4); }
-    }
-    @keyframes gridScroll {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(20px); }
-    }
-    @keyframes glitch1 {
-      0%, 92%, 100% { transform: translate(0, 0); }
-      93% { transform: translate(-3px, 1px); }
-      95% { transform: translate(3px, -1px); }
-      97% { transform: translate(-2px, 0); }
-    }
-    @keyframes particleFade {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
-    }
-    @keyframes cornerPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.7; }
-    }
-    @keyframes subtitleFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-    @keyframes groundPulse {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
-    }
-    @keyframes scorePulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.8; }
-    }
+    /* Obstacle scroll: each visible during its window, hidden otherwise */
+    @keyframes o1 { 0%{transform:translateX(760px);opacity:1} 12.5%{transform:translateX(-80px);opacity:1} 12.6%,100%{transform:translateX(760px);opacity:0} }
+    @keyframes o2 { 0%,16.6%{transform:translateX(760px);opacity:0} 16.7%{transform:translateX(760px);opacity:1} 29.2%{transform:translateX(-80px);opacity:1} 29.3%,100%{transform:translateX(760px);opacity:0} }
+    @keyframes o3 { 0%,31.2%{transform:translateX(760px);opacity:0} 31.3%{transform:translateX(760px);opacity:1} 43.8%{transform:translateX(-80px);opacity:1} 43.9%,100%{transform:translateX(760px);opacity:0} }
+    @keyframes o4 { 0%,50%{transform:translateX(760px);opacity:0} 50.1%{transform:translateX(760px);opacity:1} 62.5%{transform:translateX(-80px);opacity:1} 62.6%,100%{transform:translateX(760px);opacity:0} }
+    @keyframes o5 { 0%,64.5%{transform:translateX(760px);opacity:0} 64.6%{transform:translateX(760px);opacity:1} 77.1%{transform:translateX(-80px);opacity:1} 77.2%,100%{transform:translateX(760px);opacity:0} }
+    @keyframes o6 { 0%,83.3%{transform:translateX(760px);opacity:0} 83.4%{transform:translateX(760px);opacity:1} 95.8%{transform:translateX(-80px);opacity:1} 95.9%,100%{transform:translateX(760px);opacity:0} }
 
-    .char-action   { animation: charAction 12s ease-in-out infinite; transform-origin: center bottom; }
-    .obst-1        { animation: obst1 4s linear infinite; }
-    .obst-2        { animation: obst2 4s linear infinite 1s; }
-    .obst-3        { animation: obst3 4s linear infinite 2s; }
-    .obst-4        { animation: obst4 4s linear infinite 3s; }
-    .bug-walk      { animation: bugWalk 0.3s linear infinite; }
-    .bug-fly       { animation: bugFly 0.5s ease-in-out infinite; }
-    .bug-wings     { animation: bugWings 0.12s linear infinite; }
-    .grid-group    { animation: gridScroll 4s linear infinite; }
-    .title-main    { animation: glitch1 8s ease-in-out infinite; }
-    .particle      { animation: particleFade 3s ease-in-out infinite; }
-    .corner-accent { animation: cornerPulse 4s ease-in-out infinite; }
-    .subtitle      { animation: subtitleFloat 5s ease-in-out infinite; }
-    .ground-line   { animation: groundPulse 3s ease-in-out infinite; }
-    .score         { animation: scorePulse 2s ease-in-out infinite; }
+    /* Body bob synced to leg cycle (0.5s) */
+    @keyframes bob { 0%,100%{transform:translateY(0)} 25%{transform:translateY(-3px)} 50%{transform:translateY(0)} 75%{transform:translateY(-3px)} }
+
+    /* Dust puffs at foot strikes */
+    @keyframes dust { 0%{opacity:0;transform:scale(0.3) translate(0,0)} 15%{opacity:0.6} 100%{opacity:0;transform:scale(2) translate(-20px,-10px)} }
+
+    /* Bug animations */
+    @keyframes bugBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+    @keyframes bugFly { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+    @keyframes bugWing { 0%,50%{transform:scaleY(1)} 25%,75%{transform:scaleY(0.3)} }
+
+    /* Binary trail from feet */
+    @keyframes binTrail {
+      0% { opacity:0.8; transform:translate(0,0) scale(1) }
+      50% { opacity:0.4 }
+      100% { opacity:0; transform:translate(-25px, -12px) scale(1.3) }
+    }
+    .bin-char { font-family:monospace; font-size:7px; fill:#00FFFF; animation: binTrail 0.6s linear infinite; }
+
+    /* Background */
+    @keyframes gridS { 0%{transform:translateY(0)} 100%{transform:translateY(20px)} }
+    @keyframes glitch { 0%,92%,100%{transform:translate(0,0)} 93%{transform:translate(-3px,1px)} 95%{transform:translate(3px,-1px)} 97%{transform:translate(-2px,0)} }
+    @keyframes pFade { 0%,100%{opacity:0} 50%{opacity:1} }
+    @keyframes cPulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+    @keyframes sFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+    @keyframes gPulse { 0%,100%{opacity:0.7} 50%{opacity:1} }
+
+    .char-jump { animation: charJump 24s ease-in-out infinite; }
+    .pose-run { animation: showRun 24s step-end infinite; }
+    .pose-f1 { animation: showF1 24s step-end infinite; opacity: 0; }
+    .pose-f2 { animation: showF2 24s step-end infinite; opacity: 0; }
+    .pose-f3 { animation: showF3 24s step-end infinite; opacity: 0; }
+    .pose-f4 { animation: showF4 24s step-end infinite; opacity: 0; }
+    .pose-f5 { animation: showF5 24s step-end infinite; opacity: 0; }
+    .pose-f6 { animation: showF6 24s step-end infinite; opacity: 0; }
+    .pose-f7 { animation: showF7 24s step-end infinite; opacity: 0; }
+    .pose-f8 { animation: showF8 24s step-end infinite; opacity: 0; }
+    .pose-f9 { animation: showF9 24s step-end infinite; opacity: 0; }
+    .pose-f10 { animation: showF10 24s step-end infinite; opacity: 0; }
+    .pose-f11 { animation: showF11 24s step-end infinite; opacity: 0; }
+    .pose-f12 { animation: showF12 24s step-end infinite; opacity: 0; }
+    .pose-f13 { animation: showF13 24s step-end infinite; opacity: 0; }
+    .pose-f14 { animation: showF14 24s step-end infinite; opacity: 0; }
+    .pose-f15 { animation: showF15 24s step-end infinite; opacity: 0; }
+    .pose-f16 { animation: showF16 24s step-end infinite; opacity: 0; }
+    .pose-f17 { animation: showF17 24s step-end infinite; opacity: 0; }
+    .body-bob { animation: bob 0.5s ease-in-out infinite; }
+    .o1 { animation: o1 24s linear infinite; }
+    .o2 { animation: o2 24s linear infinite; }
+    .o3 { animation: o3 24s linear infinite; }
+    .o4 { animation: o4 24s linear infinite; }
+    .o5 { animation: o5 24s linear infinite; }
+    .o6 { animation: o6 24s linear infinite; }
+    .bug-bob { animation: bugBob 0.3s linear infinite; }
+    .bug-fly { animation: bugFly 0.5s ease-in-out infinite; }
+    .bug-wing { animation: bugWing 0.12s linear infinite; transform-origin: center center; }
+    .dust-p { animation: dust 0.5s ease-out infinite; }
+    .grid-g { animation: gridS 4s linear infinite; }
+    .title-m { animation: glitch 8s ease-in-out infinite; }
+    .particle { animation: pFade 3s ease-in-out infinite; }
+    .corner { animation: cPulse 4s ease-in-out infinite; }
+    .subt { animation: sFloat 5s ease-in-out infinite; }
+    .gnd-line { animation: gPulse 3s ease-in-out infinite; }
   </style>
 
-  <!-- ===== BACKGROUND ===== -->
+  <!-- BG -->
   <rect width="900" height="400" fill="#0D1117"/>
-
-  <!-- Perspective grid -->
-  <g class="grid-group" opacity="0.12">
+  <g class="grid-g" opacity="0.12">
     <line x1="450" y1="160" x2="0" y2="400" stroke="#7B00FF" stroke-width="0.5"/>
     <line x1="450" y1="160" x2="150" y2="400" stroke="#7B00FF" stroke-width="0.5"/>
     <line x1="450" y1="160" x2="300" y2="400" stroke="#7B00FF" stroke-width="0.5"/>
@@ -151,201 +133,1145 @@
     <line x1="0" y1="320" x2="900" y2="320" stroke="#7B00FF" stroke-width="0.3"/>
     <line x1="0" y1="360" x2="900" y2="360" stroke="#7B00FF" stroke-width="0.3"/>
   </g>
-  <rect x="0" y="200" width="900" height="200" fill="url(#gridGrad)"/>
+  <rect x="0" y="200" width="900" height="200" fill="url(#grG)"/>
 
   <!-- Particles -->
-  <circle cx="120" cy="60" r="1.5" fill="#00FFFF" class="particle" opacity="0"/>
-  <circle cx="780" cy="80" r="1" fill="#FF00FF" class="particle" opacity="0" style="animation-delay:0.5s"/>
-  <circle cx="300" cy="40" r="1.2" fill="#7B00FF" class="particle" opacity="0" style="animation-delay:1s"/>
-  <circle cx="600" cy="50" r="1.8" fill="#00FFFF" class="particle" opacity="0" style="animation-delay:1.5s"/>
-  <circle cx="200" cy="90" r="1" fill="#FF00FF" class="particle" opacity="0" style="animation-delay:2s"/>
-  <circle cx="700" cy="35" r="1.3" fill="#00FFFF" class="particle" opacity="0" style="animation-delay:2.5s"/>
-  <circle cx="500" cy="70" r="0.8" fill="#FF00FF" class="particle" opacity="0" style="animation-delay:0.8s"/>
+  <circle cx="120" cy="60" r="1.5" fill="#00FFFF" class="particle"/>
+  <circle cx="780" cy="80" r="1" fill="#FF00FF" class="particle" style="animation-delay:0.5s"/>
+  <circle cx="300" cy="40" r="1.2" fill="#7B00FF" class="particle" style="animation-delay:1s"/>
+  <circle cx="600" cy="50" r="1.8" fill="#00FFFF" class="particle" style="animation-delay:1.5s"/>
+  <circle cx="200" cy="90" r="1" fill="#FF00FF" class="particle" style="animation-delay:2s"/>
+  <circle cx="700" cy="35" r="1.3" fill="#00FFFF" class="particle" style="animation-delay:2.5s"/>
 
-  <!-- Corner accents -->
-  <g class="corner-accent">
-    <polyline points="10,10 10,40 40,40" fill="none" stroke="#00FFFF" stroke-width="1" opacity="0.5"/>
-    <polyline points="890,10 890,40 860,40" fill="none" stroke="#00FFFF" stroke-width="1" opacity="0.5"/>
-    <polyline points="10,390 10,360 40,360" fill="none" stroke="#FF00FF" stroke-width="1" opacity="0.5"/>
-    <polyline points="890,390 890,360 860,360" fill="none" stroke="#FF00FF" stroke-width="1" opacity="0.5"/>
+  <!-- Corners -->
+  <g class="corner">
+    <polyline points="10,10 10,40 40,40" fill="none" stroke="#00FFFF" stroke-width="1"/>
+    <polyline points="890,10 890,40 860,40" fill="none" stroke="#00FFFF" stroke-width="1"/>
+    <polyline points="10,390 10,360 40,360" fill="none" stroke="#FF00FF" stroke-width="1"/>
+    <polyline points="890,390 890,360 860,360" fill="none" stroke="#FF00FF" stroke-width="1"/>
   </g>
 
-  <!-- HUD text -->
+  <!-- HUD -->
   <text x="30" y="25" font-family="monospace" font-size="9" fill="#00FFFF" opacity="0.3">0x15FPS</text>
   <text x="830" y="25" font-family="monospace" font-size="9" fill="#00FFFF" opacity="0.3">ONLINE</text>
   <text x="30" y="385" font-family="monospace" font-size="9" fill="#7B00FF" opacity="0.4">sys.init</text>
   <text x="820" y="385" font-family="monospace" font-size="9" fill="#7B00FF" opacity="0.4">v2.0.26</text>
 
-  <!-- ===== TITLE ===== -->
-  <text class="title-main" x="450" y="120" text-anchor="middle" font-family="monospace, 'Courier New'" font-size="72" font-weight="bold" fill="url(#titleGrad)" filter="url(#glowStrong)">15fps</text>
-  <text x="450" y="120" text-anchor="middle" font-family="monospace, 'Courier New'" font-size="72" font-weight="bold" fill="#FF00FF" opacity="0.3" filter="url(#glow)">15fps</text>
+  <!-- TITLE -->
+  <text class="title-m" x="450" y="120" text-anchor="middle" font-family="monospace,'Courier New'" font-size="72" font-weight="bold" fill="url(#tG)" filter="url(#glowS)">15fps</text>
+  <text x="450" y="120" text-anchor="middle" font-family="monospace,'Courier New'" font-size="72" font-weight="bold" fill="#FF00FF" opacity="0.3" filter="url(#glow)">15fps</text>
+  <text class="subt" x="450" y="155" text-anchor="middle" font-family="monospace" font-size="16" fill="#A0A0FF" letter-spacing="6">FRONTEND ENGINEER</text>
+  <text x="450" y="195" text-anchor="middle" font-family="monospace" font-size="10" fill="#00FFFF" opacity="0.5">BUGS DODGED: &#8734;</text>
 
-  <text class="subtitle" x="450" y="155" text-anchor="middle" font-family="monospace, 'Courier New'" font-size="16" fill="#A0A0FF" letter-spacing="6">FRONTEND ENGINEER</text>
+  <!-- GROUND -->
+  <line x1="40" y1="340" x2="860" y2="340" stroke="url(#gG)" stroke-width="2" filter="url(#glow)" class="gnd-line"/>
+  <line x1="60" y1="342" x2="840" y2="342" stroke="#7B00FF" stroke-width="0.5" stroke-dasharray="3 10" opacity="0.4"/>
 
-  <!-- Score display -->
-  <text class="score" x="450" y="195" text-anchor="middle" font-family="monospace" font-size="10" fill="#00FFFF" opacity="0.4">BUGS DODGED: &#8734;</text>
-
-  <!-- ===== GROUND LINE ===== -->
-  <line x1="40" y1="340" x2="860" y2="340" stroke="url(#groundGrad)" stroke-width="2" filter="url(#glow)" class="ground-line"/>
-  <!-- Ground surface dashes -->
-  <line x1="80" y1="342" x2="820" y2="342" stroke="#7B00FF" stroke-width="0.5" stroke-dasharray="3 10" opacity="0.4"/>
-
-  <!-- ===== GROUND BUG 1 (character jumps over) ===== -->
-  <g class="obst-1">
-    <g class="bug-walk" transform="translate(0, 318)">
-      <!-- Bug body -->
-      <ellipse cx="0" cy="0" rx="12" ry="8" fill="#FF1030" filter="url(#bugGlow)"/>
-      <!-- Shell line -->
-      <line x1="0" y1="-8" x2="0" y2="8" stroke="#0D1117" stroke-width="1"/>
-      <!-- Spots -->
-      <circle cx="-4" cy="-2" r="2" fill="#CC0020"/>
-      <circle cx="4" cy="2" r="1.8" fill="#CC0020"/>
-      <!-- Eyes -->
-      <circle cx="-5" cy="-4" r="2" fill="#FFFFFF"/>
-      <circle cx="5" cy="-4" r="2" fill="#FFFFFF"/>
-      <circle cx="-5" cy="-4" r="1" fill="#0D1117"/>
-      <circle cx="5" cy="-4" r="1" fill="#0D1117"/>
-      <!-- Legs -->
-      <line x1="-8" y1="4" x2="-14" y2="12" stroke="#FF1030" stroke-width="1.2"/>
-      <line x1="8" y1="4" x2="14" y2="12" stroke="#FF1030" stroke-width="1.2"/>
-      <line x1="-10" y1="0" x2="-15" y2="5" stroke="#FF1030" stroke-width="1"/>
-      <line x1="10" y1="0" x2="15" y2="5" stroke="#FF1030" stroke-width="1"/>
-      <line x1="-9" y1="-3" x2="-14" y2="-1" stroke="#FF1030" stroke-width="1"/>
-      <line x1="9" y1="-3" x2="14" y2="-1" stroke="#FF1030" stroke-width="1"/>
-      <!-- Antennae -->
-      <line x1="-5" y1="-8" x2="-10" y2="-16" stroke="#FF1030" stroke-width="0.8"/>
-      <line x1="5" y1="-8" x2="10" y2="-16" stroke="#FF1030" stroke-width="0.8"/>
-      <circle cx="-10" cy="-16" r="1.5" fill="#FF6080"/>
-      <circle cx="10" cy="-16" r="1.5" fill="#FF6080"/>
-      <!-- Label -->
-      <text x="0" y="3" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" opacity="0.9">BUG</text>
+  <!-- ====== GROUND BUG template (used for o1, o3, o6) ====== -->
+  <!-- O1: ground bug -->
+  <g class="o1">
+    <g class="bug-bob">
+      <ellipse cx="0" cy="325" rx="14" ry="10" fill="#FF1030" filter="url(#bugG)"/>
+      <line x1="0" y1="315" x2="0" y2="335" stroke="#0D1117" stroke-width="1.2"/>
+      <circle cx="-5" cy="322" r="2.5" fill="#CC0020"/><circle cx="5" cy="328" r="2" fill="#CC0020"/>
+      <circle cx="-6" cy="319" r="2.5" fill="#FFF"/><circle cx="6" cy="319" r="2.5" fill="#FFF"/>
+      <circle cx="-6" cy="319" r="1.3" fill="#0D1117"/><circle cx="6" cy="319" r="1.3" fill="#0D1117"/>
+      <line x1="-10" y1="330" x2="-16" y2="340" stroke="#FF1030" stroke-width="1.5"/>
+      <line x1="10" y1="330" x2="16" y2="340" stroke="#FF1030" stroke-width="1.5"/>
+      <line x1="-12" y1="325" x2="-18" y2="332" stroke="#FF1030" stroke-width="1.2"/>
+      <line x1="12" y1="325" x2="18" y2="332" stroke="#FF1030" stroke-width="1.2"/>
+      <line x1="-6" y1="315" x2="-12" y2="305" stroke="#FF1030" stroke-width="1"/>
+      <line x1="6" y1="315" x2="12" y2="305" stroke="#FF1030" stroke-width="1"/>
+      <circle cx="-12" cy="305" r="2" fill="#FF6080"/><circle cx="12" cy="305" r="2" fill="#FF6080"/>
+      <text x="0" y="329" text-anchor="middle" font-family="monospace" font-size="8" font-weight="bold" fill="#FFF">BUG</text>
     </g>
   </g>
 
-  <!-- ===== FLYING BUG (character ducks under) ===== -->
-  <g class="obst-2">
-    <g class="bug-fly" transform="translate(0, 278)">
-      <!-- Bug body -->
-      <ellipse cx="0" cy="0" rx="11" ry="7" fill="#FF1030" filter="url(#bugGlow)"/>
-      <line x1="0" y1="-7" x2="0" y2="7" stroke="#0D1117" stroke-width="1"/>
-      <circle cx="-4" cy="-2" r="1.5" fill="#CC0020"/>
-      <circle cx="4" cy="2" r="1.5" fill="#CC0020"/>
-      <!-- Eyes (angry) -->
-      <circle cx="-4" cy="-3" r="1.8" fill="#FFFFFF"/>
-      <circle cx="4" cy="-3" r="1.8" fill="#FFFFFF"/>
-      <circle cx="-4" cy="-3" r="0.9" fill="#0D1117"/>
-      <circle cx="4" cy="-3" r="0.9" fill="#0D1117"/>
-      <!-- Angry eyebrows -->
-      <line x1="-6" y1="-6" x2="-2" y2="-5" stroke="#0D1117" stroke-width="1"/>
-      <line x1="6" y1="-6" x2="2" y2="-5" stroke="#0D1117" stroke-width="1"/>
-      <!-- Wings -->
-      <g class="bug-wings" style="transform-origin: center center;">
-        <ellipse cx="-8" cy="-6" rx="7" ry="4" fill="#FF1030" opacity="0.25"/>
-        <ellipse cx="8" cy="-6" rx="7" ry="4" fill="#FF1030" opacity="0.25"/>
-      </g>
-      <!-- Antennae -->
-      <line x1="-4" y1="-7" x2="-8" y2="-14" stroke="#FF1030" stroke-width="0.8"/>
-      <line x1="4" y1="-7" x2="8" y2="-14" stroke="#FF1030" stroke-width="0.8"/>
-      <circle cx="-8" cy="-14" r="1.3" fill="#FF6080"/>
-      <circle cx="8" cy="-14" r="1.3" fill="#FF6080"/>
-      <!-- Label -->
-      <text x="0" y="3" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" opacity="0.9">BUG</text>
+  <!-- O2: flying bug -->
+  <g class="o2">
+    <g class="bug-fly">
+      <ellipse cx="0" cy="285" rx="13" ry="9" fill="#FF1030" filter="url(#bugG)"/>
+      <line x1="0" y1="276" x2="0" y2="294" stroke="#0D1117" stroke-width="1.2"/>
+      <circle cx="-5" cy="280" r="2.3" fill="#FFF"/><circle cx="5" cy="280" r="2.3" fill="#FFF"/>
+      <circle cx="-5" cy="280" r="1.2" fill="#0D1117"/><circle cx="5" cy="280" r="1.2" fill="#0D1117"/>
+      <line x1="-8" y1="276" x2="-3" y2="278" stroke="#0D1117" stroke-width="1.2"/>
+      <line x1="8" y1="276" x2="3" y2="278" stroke="#0D1117" stroke-width="1.2"/>
+      <g class="bug-wing"><ellipse cx="-10" cy="277" rx="8" ry="5" fill="#FF1030" opacity="0.3"/><ellipse cx="10" cy="277" rx="8" ry="5" fill="#FF1030" opacity="0.3"/></g>
+      <line x1="-5" y1="276" x2="-10" y2="266" stroke="#FF1030" stroke-width="1"/><line x1="5" y1="276" x2="10" y2="266" stroke="#FF1030" stroke-width="1"/>
+      <circle cx="-10" cy="266" r="1.8" fill="#FF6080"/><circle cx="10" cy="266" r="1.8" fill="#FF6080"/>
+      <text x="0" y="289" text-anchor="middle" font-family="monospace" font-size="8" font-weight="bold" fill="#FFF">BUG</text>
     </g>
   </g>
 
-  <!-- ===== GROUND BUG 2 (character jumps) ===== -->
-  <g class="obst-3">
-    <g class="bug-walk" transform="translate(0, 320)">
-      <ellipse cx="0" cy="0" rx="10" ry="7" fill="#FF1030" filter="url(#bugGlow)"/>
-      <line x1="0" y1="-7" x2="0" y2="7" stroke="#0D1117" stroke-width="1"/>
-      <circle cx="-3" cy="-2" r="1.5" fill="#CC0020"/>
-      <circle cx="3" cy="2" r="1.3" fill="#CC0020"/>
-      <circle cx="-4" cy="-3" r="1.8" fill="#FFFFFF"/>
-      <circle cx="4" cy="-3" r="1.8" fill="#FFFFFF"/>
-      <circle cx="-4" cy="-3" r="0.9" fill="#0D1117"/>
-      <circle cx="4" cy="-3" r="0.9" fill="#0D1117"/>
-      <line x1="-7" y1="4" x2="-12" y2="10" stroke="#FF1030" stroke-width="1.2"/>
-      <line x1="7" y1="4" x2="12" y2="10" stroke="#FF1030" stroke-width="1.2"/>
-      <line x1="-8" y1="0" x2="-13" y2="4" stroke="#FF1030" stroke-width="1"/>
-      <line x1="8" y1="0" x2="13" y2="4" stroke="#FF1030" stroke-width="1"/>
-      <line x1="-4" y1="-7" x2="-8" y2="-14" stroke="#FF1030" stroke-width="0.8"/>
-      <line x1="4" y1="-7" x2="8" y2="-14" stroke="#FF1030" stroke-width="0.8"/>
-      <circle cx="-8" cy="-14" r="1.3" fill="#FF6080"/>
-      <circle cx="8" cy="-14" r="1.3" fill="#FF6080"/>
-      <text x="0" y="3" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" opacity="0.9">BUG</text>
+  <!-- O3: ground bug -->
+  <g class="o3">
+    <g class="bug-bob">
+      <ellipse cx="0" cy="326" rx="12" ry="9" fill="#FF1030" filter="url(#bugG)"/>
+      <line x1="0" y1="317" x2="0" y2="335" stroke="#0D1117" stroke-width="1"/>
+      <circle cx="-5" cy="320" r="2.2" fill="#FFF"/><circle cx="5" cy="320" r="2.2" fill="#FFF"/>
+      <circle cx="-5" cy="320" r="1.1" fill="#0D1117"/><circle cx="5" cy="320" r="1.1" fill="#0D1117"/>
+      <line x1="-9" y1="331" x2="-14" y2="340" stroke="#FF1030" stroke-width="1.3"/><line x1="9" y1="331" x2="14" y2="340" stroke="#FF1030" stroke-width="1.3"/>
+      <line x1="-5" y1="317" x2="-10" y2="307" stroke="#FF1030" stroke-width="0.9"/><line x1="5" y1="317" x2="10" y2="307" stroke="#FF1030" stroke-width="0.9"/>
+      <circle cx="-10" cy="307" r="1.8" fill="#FF6080"/><circle cx="10" cy="307" r="1.8" fill="#FF6080"/>
+      <text x="0" y="330" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#FFF">BUG</text>
     </g>
   </g>
 
-  <!-- ===== FLYING BUG 2 (character ducks) ===== -->
-  <g class="obst-4">
-    <g class="bug-fly" transform="translate(0, 282)">
-      <ellipse cx="0" cy="0" rx="10" ry="6.5" fill="#FF1030" filter="url(#bugGlow)"/>
-      <line x1="0" y1="-6.5" x2="0" y2="6.5" stroke="#0D1117" stroke-width="1"/>
-      <circle cx="-4" cy="-3" r="1.6" fill="#FFFFFF"/>
-      <circle cx="4" cy="-3" r="1.6" fill="#FFFFFF"/>
-      <circle cx="-4" cy="-3" r="0.8" fill="#0D1117"/>
-      <circle cx="4" cy="-3" r="0.8" fill="#0D1117"/>
-      <line x1="-5.5" y1="-5.5" x2="-2" y2="-5" stroke="#0D1117" stroke-width="1"/>
-      <line x1="5.5" y1="-5.5" x2="2" y2="-5" stroke="#0D1117" stroke-width="1"/>
-      <g class="bug-wings" style="transform-origin: center center;">
-        <ellipse cx="-7" cy="-5" rx="6" ry="3.5" fill="#FF1030" opacity="0.25"/>
-        <ellipse cx="7" cy="-5" rx="6" ry="3.5" fill="#FF1030" opacity="0.25"/>
-      </g>
-      <line x1="-4" y1="-6.5" x2="-7" y2="-13" stroke="#FF1030" stroke-width="0.8"/>
-      <line x1="4" y1="-6.5" x2="7" y2="-13" stroke="#FF1030" stroke-width="0.8"/>
-      <circle cx="-7" cy="-13" r="1.2" fill="#FF6080"/>
-      <circle cx="7" cy="-13" r="1.2" fill="#FF6080"/>
-      <text x="0" y="2.5" text-anchor="middle" font-family="monospace" font-size="6" font-weight="bold" fill="#FFFFFF" opacity="0.9">BUG</text>
+  <!-- O4: flying bug -->
+  <g class="o4">
+    <g class="bug-fly">
+      <ellipse cx="0" cy="287" rx="12" ry="8" fill="#FF1030" filter="url(#bugG)"/>
+      <line x1="0" y1="279" x2="0" y2="295" stroke="#0D1117" stroke-width="1"/>
+      <circle cx="-5" cy="283" r="2" fill="#FFF"/><circle cx="5" cy="283" r="2" fill="#FFF"/>
+      <circle cx="-5" cy="283" r="1" fill="#0D1117"/><circle cx="5" cy="283" r="1" fill="#0D1117"/>
+      <line x1="-7" y1="279" x2="-3" y2="281" stroke="#0D1117" stroke-width="1.1"/><line x1="7" y1="279" x2="3" y2="281" stroke="#0D1117" stroke-width="1.1"/>
+      <g class="bug-wing"><ellipse cx="-8" cy="280" rx="7" ry="4" fill="#FF1030" opacity="0.3"/><ellipse cx="8" cy="280" rx="7" ry="4" fill="#FF1030" opacity="0.3"/></g>
+      <line x1="-5" y1="279" x2="-9" y2="270" stroke="#FF1030" stroke-width="0.9"/><line x1="5" y1="279" x2="9" y2="270" stroke="#FF1030" stroke-width="0.9"/>
+      <circle cx="-9" cy="270" r="1.5" fill="#FF6080"/><circle cx="9" cy="270" r="1.5" fill="#FF6080"/>
+      <text x="0" y="291" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#FFF">BUG</text>
     </g>
   </g>
 
-  <!-- ===== CHARACTER (stays at x=180) ===== -->
-  <g transform="translate(180, 0)">
-    <g class="char-action" style="transform-origin: 0px 340px;">
+  <!-- O5: flying bug (second in a row!) -->
+  <g class="o5">
+    <g class="bug-fly">
+      <ellipse cx="0" cy="283" rx="11" ry="8" fill="#FF1030" filter="url(#bugG)"/>
+      <line x1="0" y1="275" x2="0" y2="291" stroke="#0D1117" stroke-width="1"/>
+      <circle cx="-4" cy="279" r="2" fill="#FFF"/><circle cx="4" cy="279" r="2" fill="#FFF"/>
+      <circle cx="-4" cy="279" r="1" fill="#0D1117"/><circle cx="4" cy="279" r="1" fill="#0D1117"/>
+      <line x1="-6.5" y1="275" x2="-2.5" y2="277" stroke="#0D1117" stroke-width="1"/><line x1="6.5" y1="275" x2="2.5" y2="277" stroke="#0D1117" stroke-width="1"/>
+      <g class="bug-wing"><ellipse cx="-8" cy="276" rx="6" ry="3.5" fill="#FF1030" opacity="0.3"/><ellipse cx="8" cy="276" rx="6" ry="3.5" fill="#FF1030" opacity="0.3"/></g>
+      <text x="0" y="287" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#FFF">BUG</text>
+    </g>
+  </g>
 
-      <!-- Head -->
-      <circle cx="0" cy="290" r="8" fill="#A0A0FF"/>
-      <!-- Hair/beanie -->
-      <path d="M-7,286 Q-8,278 0,276 Q8,278 7,286" fill="#7B00FF"/>
-      <!-- Glasses -->
-      <rect x="-6.5" y="287" width="5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
-      <rect x="1.5" y="287" width="5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
-      <line x1="-1.5" y1="289" x2="1.5" y2="289" stroke="#00FFFF" stroke-width="0.5"/>
-      <circle cx="-4" cy="289" r="1" fill="#00FFFF"/>
-      <circle cx="4" cy="289" r="1" fill="#00FFFF"/>
+  <!-- O6: ground bug -->
+  <g class="o6">
+    <g class="bug-bob">
+      <ellipse cx="0" cy="324" rx="13" ry="9" fill="#FF1030" filter="url(#bugG)"/>
+      <line x1="0" y1="315" x2="0" y2="333" stroke="#0D1117" stroke-width="1.1"/>
+      <circle cx="-5" cy="318" r="2.3" fill="#FFF"/><circle cx="5" cy="318" r="2.3" fill="#FFF"/>
+      <circle cx="-5" cy="318" r="1.1" fill="#0D1117"/><circle cx="5" cy="318" r="1.1" fill="#0D1117"/>
+      <line x1="-10" y1="329" x2="-15" y2="340" stroke="#FF1030" stroke-width="1.4"/><line x1="10" y1="329" x2="15" y2="340" stroke="#FF1030" stroke-width="1.4"/>
+      <line x1="-5" y1="315" x2="-10" y2="306" stroke="#FF1030" stroke-width="0.9"/><line x1="5" y1="315" x2="10" y2="306" stroke="#FF1030" stroke-width="0.9"/>
+      <circle cx="-10" cy="306" r="1.8" fill="#FF6080"/><circle cx="10" cy="306" r="1.8" fill="#FF6080"/>
+      <text x="0" y="328" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#FFF">BUG</text>
+    </g>
+  </g>
 
-      <!-- Body (hoodie) -->
-      <rect x="-7" y="298" width="14" height="18" rx="3" fill="#1a1a3e"/>
-      <path d="M-4,298 L0,303 L4,298" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
-      <rect x="-4" y="308" width="8" height="4" rx="1" fill="none" stroke="#7B00FF" stroke-width="0.5" opacity="0.4"/>
+  <!-- ====== CHARACTER at x=450 (centered) ====== -->
+  <g transform="translate(450, 0)">
+    <g class="char-jump">
 
-      <!-- Laptop -->
-      <g transform="translate(9, 304)">
-        <rect x="0" y="0" width="10" height="7" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
-        <rect x="1" y="1" width="8" height="5" rx="0.5" fill="#00FFFF" opacity="0.8"/>
-        <text x="5" y="4.5" text-anchor="middle" font-family="monospace" font-size="3.5" fill="#0D1117">&gt;_</text>
-        <rect x="-0.5" y="7" width="11" height="1.5" rx="0.5" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.4"/>
+      <!-- Dust particles behind feet -->
+      <g transform="translate(-10, 338)">
+        <circle r="3" fill="#7B00FF" opacity="0" class="dust-p"/>
+        <circle r="2.5" fill="#7B00FF" opacity="0" class="dust-p" style="animation-delay:0.12s"/>
+        <circle r="4" fill="#7B00FF" opacity="0" class="dust-p" style="animation-delay:0.25s"/>
+        <circle r="2" fill="#7B00FF" opacity="0" class="dust-p" style="animation-delay:0.37s"/>
       </g>
 
-      <!-- Arms -->
-      <line x1="7" y1="302" x2="11" y2="308" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="-7" y1="302" x2="-5" y2="310" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Binary trail from feet -->
+      <g transform="translate(-5, 340)">
+        <text x="0" y="0" class="bin-char" style="animation-delay:0s; font-size:12px">1</text>
+        <text x="-8" y="-3" class="bin-char" style="animation-delay:0.05s; font-size:11px; fill:#7B00FF">0</text>
+        <text x="-16" y="-6" class="bin-char" style="animation-delay:0.10s; font-size:11px">1</text>
+        <text x="-24" y="-10" class="bin-char" style="animation-delay:0.15s; font-size:10px; fill:#7B00FF">1</text>
+        <text x="-32" y="-13" class="bin-char" style="animation-delay:0.20s; font-size:10px">0</text>
+        <text x="-40" y="-16" class="bin-char" style="animation-delay:0.25s; font-size:9px; fill:#7B00FF">1</text>
+        <text x="-47" y="-19" class="bin-char" style="animation-delay:0.30s; font-size:9px">0</text>
+        <text x="-54" y="-22" class="bin-char" style="animation-delay:0.35s; font-size:8px; fill:#7B00FF">0</text>
+        <text x="-61" y="-24" class="bin-char" style="animation-delay:0.40s; font-size:8px">1</text>
+        <text x="-67" y="-27" class="bin-char" style="animation-delay:0.45s; font-size:7px; fill:#7B00FF">1</text>
+        <text x="-73" y="-29" class="bin-char" style="animation-delay:0.50s; font-size:7px">0</text>
+        <text x="-79" y="-31" class="bin-char" style="animation-delay:0.55s; font-size:6px; fill:#7B00FF">1</text>
+        <text x="-84" y="-33" class="bin-char" style="animation-delay:0.60s; font-size:6px">0</text>
+        <text x="-89" y="-35" class="bin-char" style="animation-delay:0.65s; font-size:5px; fill:#7B00FF">1</text>
+        <text x="-93" y="-37" class="bin-char" style="animation-delay:0.70s; font-size:5px">1</text>
+        <text x="-97" y="-38" class="bin-char" style="animation-delay:0.75s; font-size:4px; fill:#7B00FF">0</text>
+        <text x="-100" y="-39" class="bin-char" style="animation-delay:0.80s; font-size:4px">0</text>
+        <text x="-103" y="-40" class="bin-char" style="animation-delay:0.85s; font-size:3px; fill:#7B00FF">1</text>
+      </g>
 
-      <!-- Left leg -->
-      <line x1="-4" y1="316" x2="-6" y2="335" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round">
-        <animateTransform attributeName="transform" type="rotate" values="-12,-4,316;12,-4,316;-12,-4,316" dur="0.4s" repeatCount="indefinite"/>
-      </line>
-      <ellipse cx="-8" cy="337" rx="4" ry="2" fill="#FF00FF">
-        <animateTransform attributeName="transform" type="rotate" values="-12,-4,316;12,-4,316;-12,-4,316" dur="0.4s" repeatCount="indefinite"/>
-      </ellipse>
+      <!-- ===== POSE: Running (default, visible) ===== -->
+      <g class="pose-run">
+        <g class="body-bob">
+          <!-- Head -->
+          <circle cx="0" cy="280" r="9" fill="#A0A0FF"/>
+          <path d="M-8,276 Q-9,268 0,266 Q9,268 8,276" fill="#7B00FF"/>
+          <rect x="-7" y="278" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="278" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <line x1="-1.5" y1="280" x2="1.5" y2="280" stroke="#00FFFF" stroke-width="0.5"/>
+          <circle cx="-4.2" cy="280" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="280" r="1.1" fill="#00FFFF"/>
+          <!-- Torso -->
+          <rect x="-8" y="289" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,289 L0,295 L4,289" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <rect x="-4" y="303" width="8" height="4" rx="1" fill="none" stroke="#7B00FF" stroke-width="0.4" opacity="0.4"/>
+          <!-- Arms + Laptop -->
+          <line x1="-8" y1="293" x2="-4" y2="300" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="-4" y1="300" x2="4" y2="302" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="8" y1="293" x2="12" y2="299" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="12" y1="299" x2="16" y2="301" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(3, 298)">
+            <rect x="0" y="0" width="14" height="9" rx="1.5" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.7"/>
+            <rect x="1.5" y="1.5" width="11" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+            <text x="7" y="6" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#0D1117">&gt;_</text>
+            <rect x="-1" y="9" width="16" height="1.8" rx="0.7" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.4"/>
+          </g>
+        </g>
+        <!-- Legs with articulated SMIL -->
+        <g transform="translate(-4, 313)">
+          <g>
+            <animateTransform attributeName="transform" type="rotate" values="-25 0 0; 25 0 0; -25 0 0" dur="0.5s" repeatCount="indefinite"/>
+            <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+            <g transform="translate(0, 14)">
+              <g>
+                <animateTransform attributeName="transform" type="rotate" values="45 0 0; 5 0 0; 45 0 0" dur="0.5s" repeatCount="indefinite"/>
+                <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+                <ellipse cx="2" cy="12" rx="5" ry="2" fill="#FF00FF"/>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g transform="translate(4, 313)">
+          <g>
+            <animateTransform attributeName="transform" type="rotate" values="25 0 0; -25 0 0; 25 0 0" dur="0.5s" repeatCount="indefinite"/>
+            <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+            <g transform="translate(0, 14)">
+              <g>
+                <animateTransform attributeName="transform" type="rotate" values="5 0 0; 45 0 0; 5 0 0" dur="0.5s" repeatCount="indefinite"/>
+                <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+                <ellipse cx="2" cy="12" rx="5" ry="2" fill="#FF00FF"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
 
-      <!-- Right leg -->
-      <line x1="4" y1="316" x2="6" y2="335" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round">
-        <animateTransform attributeName="transform" type="rotate" values="12,4,316;-12,4,316;12,4,316" dur="0.4s" repeatCount="indefinite"/>
-      </line>
-      <ellipse cx="8" cy="337" rx="4" ry="2" fill="#FF00FF">
-        <animateTransform attributeName="transform" type="rotate" values="12,4,316;-12,4,316;12,4,316" dur="0.4s" repeatCount="indefinite"/>
-      </ellipse>
+      <!-- ===== ROLL FRAME 0 ===== -->
+      <g class="pose-f1">
+        <g transform="translate(0,313)">
+          <g transform="translate(0,0) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(2)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(23)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(-7)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(17)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,0) rotate(0)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-36)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-22)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-50)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(0)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 1 ===== -->
+      <g class="pose-f2">
+        <g transform="translate(0,313)">
+          <g transform="translate(0,0) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(24)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(42)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(1)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(34)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,0) rotate(20)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-36)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-22)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-50)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(0)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 2 ===== -->
+      <g class="pose-f3">
+        <g transform="translate(0,313)">
+          <g transform="translate(0,0) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(77)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(1)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(34)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-2,0) rotate(66)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-22)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(0)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 3 ===== -->
+      <g class="pose-f4">
+        <g transform="translate(0,313)">
+          <g transform="translate(0,0) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(77)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(107)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(1)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(34)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-2,0) rotate(83)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-22)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(56)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 4 ===== -->
+      <g class="pose-f5">
+        <g transform="translate(0,313)">
+          <g transform="translate(0,-4) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(77)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(107)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(13)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(94)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-2,-1) rotate(115)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-22)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(46)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 5 ===== -->
+      <g class="pose-f6">
+        <g transform="translate(0,313)">
+          <g transform="translate(-2,-4) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(120)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(111)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(48)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(112)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(120)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-22)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(75)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 6 ===== -->
+      <g class="pose-f7">
+        <g transform="translate(0,313)">
+          <g transform="translate(-2,-4) rotate(38)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(111)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(96)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(138)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(86)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 7 ===== -->
+      <g class="pose-f8">
+        <g transform="translate(0,313)">
+          <g transform="translate(1,3) rotate(65)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(111)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(96)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(138)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(86)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 8 ===== -->
+      <g class="pose-f9">
+        <g transform="translate(0,313)">
+          <g transform="translate(5,6) rotate(81)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(111)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(96)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(138)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(86)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 9 ===== -->
+      <g class="pose-f10">
+        <g transform="translate(0,313)">
+          <g transform="translate(5,14) rotate(125)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(111)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(62)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(96)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(138)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(61)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 10 ===== -->
+      <g class="pose-f11">
+        <g transform="translate(0,313)">
+          <g transform="translate(5,14) rotate(147)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(94)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(108)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(100)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(96)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(138)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(61)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 11 ===== -->
+      <g class="pose-f12">
+        <g transform="translate(0,313)">
+          <g transform="translate(5,14) rotate(168)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(100)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(100)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(100)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(126)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(138)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(39)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 12 ===== -->
+      <g class="pose-f13">
+        <g transform="translate(0,313)">
+          <g transform="translate(5,9) rotate(168)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(115)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(97)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(120)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(106)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(150)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(39)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 13 ===== -->
+      <g class="pose-f14">
+        <g transform="translate(0,313)">
+          <g transform="translate(5,5) rotate(168)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(120)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(87)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(120)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(104)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-3,-2) rotate(-180)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-61)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(29)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-8) rotate(2)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 14 ===== -->
+      <g class="pose-f15">
+        <g transform="translate(0,313)">
+          <g transform="translate(-2,2) rotate(170)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(120)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(61)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(120)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(72)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(-2,-2) rotate(-175)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-43)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-37)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-19)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-66)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(16)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(16,-10) rotate(3)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 15 ===== -->
+      <g class="pose-f16">
+        <g transform="translate(0,313)">
+          <g transform="translate(0,0) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(-27)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(-29)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(51)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,0) rotate(0)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-51)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-25)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-70)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(0)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-11) rotate(0)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- ===== ROLL FRAME 16 ===== -->
+      <g class="pose-f17">
+        <g transform="translate(0,313)">
+          <g transform="translate(0,0) rotate(0)">
+          <g transform="rotate(0)">
+          <g transform="translate(-4,0)"><g transform="rotate(-9)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(31)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(4,0)"><g transform="rotate(-15)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0,14)"><g transform="rotate(30)">
+          <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,0) rotate(0)">
+          <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+          <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+          <g transform="translate(-8,-20)"><g transform="rotate(-34)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-51)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(8,-20)"><g transform="rotate(-25)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(0,10)"><g transform="rotate(-70)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+          </g></g>
+          </g></g>
+          <g transform="translate(0,-24)"><g transform="rotate(0)">
+          <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+          <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+          <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+          <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+          </g></g>
+          <g transform="translate(15,-11) rotate(0)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+          <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+          </g>
+          </g>
+          </g>
+          </g>
+        </g>
+      </g></g>
+              </g></g>
+              <g transform="translate(4,0)"><g transform="rotate(-6)">
+                <line x1="0" y1="0" x2="0" y2="14" stroke="#1a1a3e" stroke-width="4" stroke-linecap="round"/>
+                <g transform="translate(0,14)"><g transform="rotate(47)">
+                  <line x1="0" y1="0" x2="0" y2="11" stroke="#1a1a3e" stroke-width="3.5" stroke-linecap="round"/>
+                  <ellipse cx="2" cy="13" rx="5" ry="2" fill="#FF00FF"/>
+                </g></g>
+              </g></g>
+              <g transform="rotate(39)">
+                <rect x="-8" y="-24" width="16" height="24" rx="3" fill="#1a1a3e"/>
+                <path d="M-4,-24 L0,-18 L4,-24" fill="none" stroke="#7B00FF" stroke-width="0.8"/>
+                <g transform="translate(-8,-20)"><g transform="rotate(-26)">
+                  <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+                  <g transform="translate(0,10)"><g transform="rotate(-57)">
+                    <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+                  </g></g>
+                </g></g>
+                <g transform="translate(8,-20)"><g transform="rotate(-9)">
+                  <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+                  <g transform="translate(0,10)"><g transform="rotate(-77)">
+                    <line x1="0" y1="0" x2="0" y2="10" stroke="#A0A0FF" stroke-width="2.5" stroke-linecap="round"/>
+                  </g></g>
+                </g></g>
+                <g transform="translate(0,-24)"><g transform="rotate(0)">
+                  <circle cx="0" cy="-9" r="9" fill="#A0A0FF"/>
+                  <path d="M-8,-13 Q-9,-21 0,-23 Q9,-21 8,-13" fill="#7B00FF"/>
+                  <rect x="-7" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+                  <rect x="1.5" y="-11" width="5.5" height="4" rx="1" fill="#0D1117" stroke="#00FFFF" stroke-width="0.7"/>
+                  <circle cx="-4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+                  <circle cx="4.2" cy="-9" r="1.1" fill="#00FFFF"/>
+                </g></g>
+                <g transform="translate(13,-9) rotate(9)">
+                  <rect x="-6" y="-4" width="12" height="8" rx="1" fill="#1a1a2e" stroke="#7B00FF" stroke-width="0.6"/>
+                  <rect x="-5" y="-3" width="10" height="6" rx="0.5" fill="#00FFFF" opacity="0.8"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
 
     </g>
   </g>
