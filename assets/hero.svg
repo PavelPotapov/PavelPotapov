@@ -111,7 +111,7 @@
     .bug-fly { animation: bugFly 0.5s ease-in-out infinite; }
     .bug-wing { animation: bugWing 0.12s linear infinite; transform-origin: center center; }
     .dust-p { animation: dust 0.5s ease-out infinite; }
-    .grid-g { animation: gridS 4s linear infinite; }
+    .grid-g { animation: gridS 4s ease-in-out infinite alternate; }
     .title-m { animation: glitch 8s ease-in-out infinite; }
     .particle { animation: pFade 3s ease-in-out infinite; }
     .corner { animation: cPulse 4s ease-in-out infinite; }
