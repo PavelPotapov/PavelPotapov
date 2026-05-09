@@ -13,7 +13,6 @@
   <a href="mailto:potapv.p.s@yandex.ru"><img src="https://img.shields.io/badge/Email-FF00FF?style=for-the-badge&logo=maildotru&logoColor=0D1117" alt="Email" /></a>
 </p>
 
-<p align="center"><img src="./assets/divider.svg" width="100%" /></p>
 
 ## `> whoami`
 
@@ -26,7 +25,6 @@ Frontend Engineer. I build things that most developers avoid — visual editors,
 
 Currently building an AI-powered presentation platform and shipping headless table widgets.
 
-<p align="center"><img src="./assets/divider.svg" width="100%" /></p>
 
 ## `> tech_stack`
 
@@ -61,7 +59,6 @@ Currently building an AI-powered presentation platform and shipping headless tab
 
 </details>
 
-<p align="center"><img src="./assets/divider.svg" width="100%" /></p>
 
 ## `> featured_work`
 
